@@ -1,0 +1,57 @@
+td, th {
+    border: 1px solid #777;
+    padding: 5px;
+}
+.row:nth-child(2n){
+    background-color: blue;
+}
+.row:nth-child(2n+1){
+    background-color: green;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+#dom-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-buttons button {
+    margin: 10px 5px 10px 10px;
+    font-size: 15px;
+    width: 120px;
+}
+
+.odd-row-class {
+    background-color: whitesmoke;
+}
+
+.even-row-class {
+    background-color: wheat;
+}
+
+
+.wrapper{
+    text-align: center;
+    width: 100px;
+    height: 100px;
+}
+.circle1{
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #32AAEE;
+    display: block;
+    box-shadow: 0px 10px 5px #32AAEE;
+    cursor: pointer;
+}
+#text{
+    font: Arial;
+    font-size: 5.5rem;
+    font-weight: solid;
+    color: #32AAEE;
+}

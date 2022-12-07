@@ -1,0 +1,40 @@
+<link href="../style.css" rel="stylesheet">
+<link href="../task2/style.css" rel="stylesheet">
+<link href="../task3/style.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<header>
+
+    <a style="text-decoration:none;" href="../index.html"><div class="wrapper">
+        <div class="circle1">
+            <span id="text">Б</span>
+        </div>
+    </div></a>
+
+    <div><a href="../task2/index.html">Рисунок</a></div>
+    <div><a href="../task3/index.html">Flexbox</a></div>
+    <div><a href="index.html">DOM</a></div>
+</header>
+<body>
+<div id="main">
+    <div style="display: flex; flex-direction: column; margin: 2em;">
+        <button class="create_row" , onclick="addRow('myTable');return false;">Создать</button>
+        <br>
+        <button class="change_even_row_font" , onclick="altrows()">Перекрасить</button>
+        <br>
+
+        <table id="myTable">
+            <thead>
+            <tr>
+                <th>Латинский язык</th>
+                <th>Русский язык</th>
+            </tr>
+            </thead>
+            <tbody id="tableb">
+            <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer>Студент группы Закарая Борис</footer>
+</body>
+<script type="text/javascript" src="script.js"></script>

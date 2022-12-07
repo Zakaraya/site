@@ -1,0 +1,24 @@
+#main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 5em;
+    margin-top: 5em;
+    flex-flow: row wrap;
+    width: 60em;
+    height: 27em;
+}
+
+header, footer, article, nav, aside {
+    padding: 1em;
+}
+
+header, footer {
+    background: yellowgreen;
+}
+
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
