@@ -4,7 +4,7 @@
 
 .item-img {
     position: absolute;
-    transform: translate(-50%, 0);
+    transform: translate(-70%, 0);
 }
 
 .flex-container .item-img:nth-of-type(2), .flex-container .item-img:nth-of-type(3) {
