@@ -13,12 +13,6 @@ table {
     border-collapse: collapse;
 }
 
-#dom-task {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .table-buttons button {
     margin: 10px 5px 10px 10px;
