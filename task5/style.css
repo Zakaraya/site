@@ -1,0 +1,151 @@
+#div11, #div12, #div13, #div14, #div15 {
+    float: left;
+    width: 142px;
+    height: 200px;
+}
+
+#div14, #div21 {
+    width: 70px;
+    height: 100px;
+}
+#div13, #div22 {
+    width: 120px;
+    height: 170px;
+}
+#div12, #div23 {
+    width: 150px;
+    height: 200px;
+}
+#div15, #div24 {
+    width: 180px;
+    height: 220px;
+}
+#div11, #div25 {
+    width: 220px;
+    height: 280px;
+}
+#div21, #div22, #div23, #div24, #div25 {
+    float: left;
+    /*width: 142px;*/
+    /*height: 200px;*/
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #BE81F7;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+
+body {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 30px;
+    color: #777;
+    background: #0CF;
+}
+
+.container {
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, button {
+    font: 400 12px/16px "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+#contact {
+    background: #F9F9F9;
+    padding: 25px;
+    margin: 50px 0;
+}
+
+#contact h3 {
+    color: #F96;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+#contact h4 {
+    margin: 5px 0 15px;
+    display: block;
+    font-size: 13px;
+}
+
+fieldset {
+    border: medium none !important;
+    margin: 0 0 10px;
+    min-width: 100%;
+    padding: 0;
+    width: 100%;
+}
+
+#contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea {
+    width: 100%;
+    border: 1px solid #CCC;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+}
+
+#contact input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
+    -webkit-transition: border-color 0.3s ease-in-out;
+    -moz-transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out;
+    border: 1px solid #AAA;
+}
+
+#contact textarea {
+    height: 100px;
+    max-width: 100%;
+    resize: none;
+}
+
+button {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: #0CF;
+    color: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.correct {
+    color: #F96;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.correct-1 {
+    color: #F96;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+th {
+    height: 50px;
+    text-align: left;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+button:disabled {
+    background: gray;
+}
