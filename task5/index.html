@@ -1,72 +1,207 @@
-<link href="style.css" rel="stylesheet">
-<body bgcolor="#d3d3d3" style="background: #d3d3d3;"  onload="f();">
+<!doctype html>
+<html>
 
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<div class="container" style="
-    margin-right: 15em;
-    float: left;
-">
-  <div id="contact">
-<section class="score">
-
-    <h1 id="high_score"></h1>
-    <span class="correct-1">Total: </span><span class="correct">0</span>
-    <button id="play-again-btn" class="play-again-btn">Play Again</button>
-    <button id="new-user" class="button" onclick="document.location='new_game.html'; sessionStorage.clear();">New User</button>
-    <button class="rating-btn" onclick="document.location = 'rating.html';">Ratings</button>
-</section>
-      <br><br>
-      <section class="score">
-    <button id="level-1" class="button">Level 1</button>
-    <button id="level-2" class="button" disabled>Level 2</button>
-    <button id="level-3" class="button" disabled>Level 3</button>
-</section>
-  </div>
-</div>
-<div style="position:relative;" class="matching-pairs">
-    <div id="div21" data-drop="drag11" ondrop="drop(event)" ondragover="allowDrop(event)"
-         style="display:inline-block; position:relative"></div>
-    <div id="div22" data-drop="drag12" ondrop="drop(event)" ondragover="allowDrop(event)"
-         style="display:inline-block; position:relative"></div>
-<!--    <div id="div23" data-drop="drag13" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative"></div>-->
-<!--    <div id="div24" data-drop="drag14" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative"></div>-->
-<!--    <div id="div25" data-drop="drag15" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative"></div>-->
-</div>
-
-<div style="position:relative;" class="draggable-items" id="draggable-items">
-    <div id="div14" class="crystal" ondrop="drop(event)" ondragover="allowDrop(event)"
-         style="display:inline-block; position:relative" data-drop="test1">
-        <img value="5" src="images/5.jpg" draggable="true" ondragstart="drag(event)"
-             id="drag15">
-    <!--            <div id="div21" data-drop="drag11" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-    <!--         style="display:inline-block; position:relative"></div>-->
+<body>
+<div>
+    <div>
+        <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="droppable">
     </div>
-    <div id="div12" class="crystal" ondrop="drop(event)" ondragover="allowDrop(event)"
-         style="display:inline-block; position:relative">
-        <img value="3" src="images/5.jpg" draggable="true" ondragstart="drag(event)"
-             id="drag13"></div>
-<!--    <div id="div13" class="crystal" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative">-->
-<!--        <img value="2" src="images/5.jpg" draggable="true" ondragstart="drag(event)"-->
-<!--             id="drag12"></div>-->
-<!--    <div id="div14" class="crystal" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative">-->
-<!--        <img value="1" src="images/5.jpg" draggable="true" ondragstart="drag(event)"-->
-<!--             id="drag11"></div>-->
-<!--    <div id="div15" class="crystal" ondrop="drop(event)" ondragover="allowDrop(event)"-->
-<!--         style="display:inline-block; position:relative">-->
-<!--        <img value="4" src="images/5.jpg" draggable="true" ondragstart="drag(event)"-->
-<!--             id="drag14"></div>-->
+    <div>
+        <div></div>
+    </div>
+</div>
+<div>
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball" class="droppable">
+    <!--  <img src="images/lion.png" id="ball" class="droppable">-->
 </div>
 
 
-<!--<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
+<script>
+    let currentDroppable = null;
+    ball = document.getElementById('ball')
+    ball.onmousedown = function (event) {
 
-<!--<button onclick="javascript:check()">Check</button>-->
+        let shiftX = event.clientX - ball.getBoundingClientRect().left;
+        let shiftY = event.clientY - ball.getBoundingClientRect().top;
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js'></script>
-<script type="text/javascript" src="script.js"></script>
+        ball.style.position = 'absolute';
+        ball.style.zIndex = 1000;
+        document.body.append(ball);
+        moveAt(event.pageX, event.pageY);
+        function moveAt(pageX, pageY) {
+            ball.style.left = pageX - shiftX + 'px';
+            ball.style.top = pageY - shiftY + 'px';
+        }
 
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+
+            ball.hidden = true;
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            ball.hidden = false;
+
+            if (!elemBelow) return;
+
+            let droppableBelow = elemBelow.closest('.droppable');
+            if (currentDroppable != droppableBelow) {
+                if (currentDroppable) { // null если мы были не над droppable до этого события
+                    // (например, над пустым пространством)
+                    leaveDroppable(currentDroppable);
+                }
+                currentDroppable = droppableBelow;
+                if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
+                    // (например, только что покинули droppable)
+                    enterDroppable(currentDroppable);
+                }
+            }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        ball.onmouseup = function () {
+            document.removeEventListener('mousemove', onMouseMove);
+            ball.onmouseup = null;
+        };
+
+    };
+
+    gate.onmousedown = function (event) {
+
+        let shiftX = event.clientX - gate.getBoundingClientRect().left;
+        let shiftY = event.clientY - gate.getBoundingClientRect().top;
+
+        gate.style.position = 'absolute';
+        gate.style.zIndex = 1000;
+        document.body.append(gate);
+
+        moveAt(event.pageX, event.pageY);
+
+        function moveAt(pageX, pageY) {
+            gate.style.left = pageX - shiftX + 'px';
+            gate.style.top = pageY - shiftY + 'px';
+        }
+
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+
+            gate.hidden = true;
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            gate.hidden = false;
+
+            if (!elemBelow) return;
+
+            let droppableBelow = elemBelow.closest('.droppable');
+            if (currentDroppable != droppableBelow) {
+                if (currentDroppable) { // null если мы были не над droppable до этого события
+                    // (например, над пустым пространством)
+                    leaveDroppable(currentDroppable);
+                }
+                currentDroppable = droppableBelow;
+                if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
+                    // (например, только что покинули droppable)
+                    enterDroppable(currentDroppable);
+                }
+            }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        gate.onmouseup = function () {
+            document.removeEventListener('mousemove', onMouseMove);
+            gate.onmouseup = null;
+        };
+
+    };
+
+    // gate.onmousedown = function(event) { // (1) отследить нажатие
+    //
+    //   // (2) подготовить к перемещению:
+    //   // разместить поверх остального содержимого и в абсолютных координатах
+    //   gate.style.position = 'absolute';
+    //   gate.style.zIndex = 1000;
+    //   // переместим в body, чтобы мяч был точно не внутри position:relative
+    //   document.body.append(gate);
+    //   // и установим абсолютно спозиционированный мяч под курсор
+    //
+    //   moveAt(event.pageX, event.pageY);
+    //
+    //   // передвинуть мяч под координаты курсора
+    //   // и сдвинуть на половину ширины/высоты для центрирования
+    //   function moveAt(pageX, pageY) {
+    //     gate.style.left = pageX - gate.offsetWidth / 2 + 'px';
+    //     gate.style.top = pageY - gate.offsetHeight / 2 + 'px';
+    //   }
+    //
+    //   function onMouseMove(event) {
+    //     moveAt(event.pageX, event.pageY);
+    //   }
+    //
+    //   // (3) перемещать по экрану
+    //   document.addEventListener('mousemove', onMouseMove);
+    //
+    //   // (4) положить мяч, удалить более ненужные обработчики событий
+    //   gate.onmouseup = function() {
+    //     document.removeEventListener('mousemove', onMouseMove);
+    //     gate.onmouseup = null;
+    //   };
+    //
+    // };
+    gate.ondragstart = function () {
+        return false;
+    };
+
+    let count = 0;
+    function enterDroppable(elem) {
+        elem.style.background = 'pink';
+        count++;
+        // if (count==2){
+        //     alert('Finish')
+        // }
+    }
+
+    function leaveDroppable(elem) {
+        elem.style.background = '';
+    }
+
+    ball.ondragstart = function () {
+        return false;
+    };
+
+
+    // collect all the divs
+    var divs = document.getElementsByTagName('div');
+    // get window width and height
+    var winWidth = window.innerWidth - 50;
+    var winHeight = window.innerHeight - 50;
+
+    // i stands for "index". you could also call this banana or haircut. it's a variable
+    for (var i = 0; i < divs.length; i++) {
+
+        // shortcut! the current div in the list
+        var thisDiv = divs[i];
+
+        // get random numbers for each element
+        randomTop = getRandomNumber(0, winHeight);
+        randomLeft = getRandomNumber(0, winWidth);
+
+        // update top and left position
+        thisDiv.style.top = randomTop + "px";
+        thisDiv.style.left = randomLeft + "px";
+
+    }
+
+    // function that returns a random number between a min and max
+    function getRandomNumber(min, max) {
+
+        return Math.random() * (max - min) + min;
+
+    }
+
+</script>
+</body>
+</html>
