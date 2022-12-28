@@ -8,170 +8,234 @@
 
 <body>
 <div>
-    <div>
-        <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="droppable">
-    </div>
-    <div>
-        <div></div>
-    </div>
+<!--    <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="animals">-->
+            <img src="images/lion.webp" id="lion" class="animals">
 </div>
 <div>
-    <img src="https://en.js.cx/clipart/ball.svg" id="ball" class="droppable">
-    <!--  <img src="images/lion.png" id="ball" class="droppable">-->
+    <img src="images/bear.png" id="bear" class="animals">
+</div>
+
+<div>
+<!--    <img src="https://en.js.cx/clipart/ball.svg" id="ball" class="droppable">-->
+        <img src="images/piranha.png" id="piranha" class="fish">
+</div>
+    <div>
+    <img src="images/shark.webp" id="shark" class="fish">
 </div>
 
 
 <script>
-    let currentDroppable = null;
-    ball = document.getElementById('ball')
-    ball.onmousedown = function (event) {
+    function jointCategory(element1, category) {
+        let currentDroppable = null;
+        element1 = document.getElementById(element1)
+        element1.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+        element1.onmousedown = function (event) {
 
-        let shiftX = event.clientX - ball.getBoundingClientRect().left;
-        let shiftY = event.clientY - ball.getBoundingClientRect().top;
+            let shiftX = event.clientX - element1.getBoundingClientRect().left;
+            let shiftY = event.clientY - element1.getBoundingClientRect().top;
 
-        ball.style.position = 'absolute';
-        ball.style.zIndex = 1000;
-        document.body.append(ball);
-        moveAt(event.pageX, event.pageY);
-        function moveAt(pageX, pageY) {
-            ball.style.left = pageX - shiftX + 'px';
-            ball.style.top = pageY - shiftY + 'px';
-        }
-
-        function onMouseMove(event) {
+            element1.style.position = 'absolute';
+            element1.style.zIndex = 1000;
+            document.body.append(element1);
             moveAt(event.pageX, event.pageY);
 
-            ball.hidden = true;
-            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-            ball.hidden = false;
+            function moveAt(pageX, pageY) {
+                element1.style.left = pageX - shiftX + 'px';
+                element1.style.top = pageY - shiftY + 'px';
+            }
 
-            if (!elemBelow) return;
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
 
-            let droppableBelow = elemBelow.closest('.droppable');
-            if (currentDroppable != droppableBelow) {
-                if (currentDroppable) { // null если мы были не над droppable до этого события
-                    // (например, над пустым пространством)
-                    leaveDroppable(currentDroppable);
-                }
-                currentDroppable = droppableBelow;
-                if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
-                    // (например, только что покинули droppable)
-                    enterDroppable(currentDroppable);
+                element1.hidden = true;
+                let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                element1.hidden = false;
+
+                if (!elemBelow) return;
+
+                let droppableBelow = elemBelow.closest(`.${category}`);
+                if (currentDroppable != droppableBelow) {
+                    if (currentDroppable) { // null если мы были не над droppable до этого события
+                        // (например, над пустым пространством)
+                        leaveDroppable(currentDroppable);
+                    }
+                    currentDroppable = droppableBelow;
+                    if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
+                        // (например, только что покинули droppable)
+                        enterDroppable(currentDroppable);
+                    }
                 }
             }
-        }
 
-        document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mousemove', onMouseMove);
 
-        ball.onmouseup = function () {
-            document.removeEventListener('mousemove', onMouseMove);
-            ball.onmouseup = null;
+            element1.onmouseup = function () {
+                document.removeEventListener('mousemove', onMouseMove);
+                element1.onmouseup = null;
+            };
+
         };
-
-    };
-
-    gate.onmousedown = function (event) {
-
-        let shiftX = event.clientX - gate.getBoundingClientRect().left;
-        let shiftY = event.clientY - gate.getBoundingClientRect().top;
-
-        gate.style.position = 'absolute';
-        gate.style.zIndex = 1000;
-        document.body.append(gate);
-
-        moveAt(event.pageX, event.pageY);
-
-        function moveAt(pageX, pageY) {
-            gate.style.left = pageX - shiftX + 'px';
-            gate.style.top = pageY - shiftY + 'px';
-        }
-
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-
-            gate.hidden = true;
-            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-            gate.hidden = false;
-
-            if (!elemBelow) return;
-
-            let droppableBelow = elemBelow.closest('.droppable');
-            if (currentDroppable != droppableBelow) {
-                if (currentDroppable) { // null если мы были не над droppable до этого события
-                    // (например, над пустым пространством)
-                    leaveDroppable(currentDroppable);
-                }
-                currentDroppable = droppableBelow;
-                if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
-                    // (например, только что покинули droppable)
-                    enterDroppable(currentDroppable);
-                }
-            }
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-
-        gate.onmouseup = function () {
-            document.removeEventListener('mousemove', onMouseMove);
-            gate.onmouseup = null;
+        element1.ondragstart = function () {
+            return false;
         };
+    }
 
-    };
+    jointCategory('lion', 'animals')
+    jointCategory('bear', 'animals')
+    jointCategory('piranha', 'fish')
+    jointCategory('shark', 'fish')
 
-    // gate.onmousedown = function(event) { // (1) отследить нажатие
+    // let currentDroppable = null;
+    // shark = document.getElementsByTagName('img')[1]
+    // gate.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+    // // console.log(shark)
+    // // console.log( document.getElementById('gate'))
+    // shark.onmousedown = function (event) {
     //
-    //   // (2) подготовить к перемещению:
-    //   // разместить поверх остального содержимого и в абсолютных координатах
-    //   gate.style.position = 'absolute';
-    //   gate.style.zIndex = 1000;
-    //   // переместим в body, чтобы мяч был точно не внутри position:relative
-    //   document.body.append(gate);
-    //   // и установим абсолютно спозиционированный мяч под курсор
+    //     let shiftX = event.clientX - shark.getBoundingClientRect().left;
+    //     let shiftY = event.clientY - shark.getBoundingClientRect().top;
     //
-    //   moveAt(event.pageX, event.pageY);
-    //
-    //   // передвинуть мяч под координаты курсора
-    //   // и сдвинуть на половину ширины/высоты для центрирования
-    //   function moveAt(pageX, pageY) {
-    //     gate.style.left = pageX - gate.offsetWidth / 2 + 'px';
-    //     gate.style.top = pageY - gate.offsetHeight / 2 + 'px';
-    //   }
-    //
-    //   function onMouseMove(event) {
+    //     shark.style.position = 'absolute';
+    //     shark.style.zIndex = 1000;
+    //     document.body.append(shark);
     //     moveAt(event.pageX, event.pageY);
-    //   }
     //
-    //   // (3) перемещать по экрану
-    //   document.addEventListener('mousemove', onMouseMove);
+    //     function moveAt(pageX, pageY) {
+    //         shark.style.left = pageX - shiftX + 'px';
+    //         shark.style.top = pageY - shiftY + 'px';
+    //     }
     //
-    //   // (4) положить мяч, удалить более ненужные обработчики событий
-    //   gate.onmouseup = function() {
-    //     document.removeEventListener('mousemove', onMouseMove);
-    //     gate.onmouseup = null;
-    //   };
+    //     function onMouseMove(event) {
+    //         moveAt(event.pageX, event.pageY);
+    //
+    //         shark.hidden = true;
+    //         let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+    //         shark.hidden = false;
+    //
+    //         if (!elemBelow) return;
+    //
+    //         let droppableBelow = elemBelow.closest('.droppable');
+    //         if (currentDroppable != droppableBelow) {
+    //             if (currentDroppable) { // null если мы были не над droppable до этого события
+    //                 // (например, над пустым пространством)
+    //                 leaveDroppable(currentDroppable);
+    //             }
+    //             currentDroppable = droppableBelow;
+    //             if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
+    //                 // (например, только что покинули droppable)
+    //                 enterDroppable(currentDroppable);
+    //             }
+    //         }
+    //     }
+    //
+    //     document.addEventListener('mousemove', onMouseMove);
+    //
+    //     shark.onmouseup = function () {
+    //         document.removeEventListener('mousemove', onMouseMove);
+    //         shark.onmouseup = null;
+    //     };
     //
     // };
-    gate.ondragstart = function () {
-        return false;
-    };
+    //
+    // gate.onmousedown = function (event) {
+    //
+    //     let shiftX = event.clientX - gate.getBoundingClientRect().left;
+    //     let shiftY = event.clientY - gate.getBoundingClientRect().top;
+    //
+    //     gate.style.position = 'absolute';
+    //     gate.style.zIndex = 1000;
+    //     document.body.append(gate);
+    //
+    //     moveAt(event.pageX, event.pageY);
+    //
+    //     function moveAt(pageX, pageY) {
+    //         gate.style.left = pageX - shiftX + 'px';
+    //         gate.style.top = pageY - shiftY + 'px';
+    //     }
+    //
+    //     function onMouseMove(event) {
+    //         moveAt(event.pageX, event.pageY);
+    //
+    //         gate.hidden = true;
+    //         let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+    //         gate.hidden = false;
+    //
+    //         if (!elemBelow) return;
+    //
+    //         let droppableBelow = elemBelow.closest('.droppable');
+    //         if (currentDroppable != droppableBelow) {
+    //             if (currentDroppable) { // null если мы были не над droppable до этого события
+    //                 // (например, над пустым пространством)
+    //                 leaveDroppable(currentDroppable);
+    //             }
+    //             currentDroppable = droppableBelow;
+    //             if (currentDroppable) { // null если мы не над droppable сейчас, во время этого события
+    //                 // (например, только что покинули droppable)
+    //                 enterDroppable(currentDroppable);
+    //             }
+    //         }
+    //     }
+    //
+    //     document.addEventListener('mousemove', onMouseMove);
+    //
+    //     gate.onmouseup = function () {
+    //         document.removeEventListener('mousemove', onMouseMove);
+    //         gate.onmouseup = null;
+    //     };
+    //
+    // };
+    //
+    // // gate.onmousedown = function(event) { // (1) отследить нажатие
+    // //
+    // //   // (2) подготовить к перемещению:
+    // //   // разместить поверх остального содержимого и в абсолютных координатах
+    // //   gate.style.position = 'absolute';
+    // //   gate.style.zIndex = 1000;
+    // //   // переместим в body, чтобы мяч был точно не внутри position:relative
+    // //   document.body.append(gate);
+    // //   // и установим абсолютно спозиционированный мяч под курсор
+    // //
+    // //   moveAt(event.pageX, event.pageY);
+    // //
+    // //   // передвинуть мяч под координаты курсора
+    // //   // и сдвинуть на половину ширины/высоты для центрирования
+    // //   function moveAt(pageX, pageY) {
+    // //     gate.style.left = pageX - gate.offsetWidth / 2 + 'px';
+    // //     gate.style.top = pageY - gate.offsetHeight / 2 + 'px';
+    // //   }
+    // //
+    // //   function onMouseMove(event) {
+    // //     moveAt(event.pageX, event.pageY);
+    // //   }
+    // //
+    // //   // (3) перемещать по экрану
+    // //   document.addEventListener('mousemove', onMouseMove);
+    // //
+    // //   // (4) положить мяч, удалить более ненужные обработчики событий
+    // //   gate.onmouseup = function() {
+    // //     document.removeEventListener('mousemove', onMouseMove);
+    // //     gate.onmouseup = null;
+    // //   };
+    // //
+    // // };
+    // gate.ondragstart = function () {
+    //     return false;
+    // };
 
     let count = 0;
     function enterDroppable(elem) {
         elem.style.background = 'pink';
         count++;
-        // if (count==2){
-        //     alert('Finish')
-        // }
+        console.log(count)
+        if (count==6){
+            alert('Finish')
+            window.location.reload()
+        }
     }
 
     function leaveDroppable(elem) {
         elem.style.background = '';
     }
-
-    ball.ondragstart = function () {
-        return false;
-    };
-
 
     // collect all the divs
     var divs = document.getElementsByTagName('div');
@@ -197,10 +261,27 @@
 
     // function that returns a random number between a min and max
     function getRandomNumber(min, max) {
-
         return Math.random() * (max - min) + min;
-
     }
+
+    let scale = 0
+    function rotate(event) {
+        event.preventDefault();
+        scale += event.deltaY * 0.1;
+        console.log(scale)
+        if (scale%360 == 0){
+            count++;
+        }
+        document.getElementById(event.target.id).style.transform = "rotate(" + scale + "deg)";
+    }
+
+
+    document.getElementById('lion').onwheel = rotate
+
+    document.getElementById('bear').onwheel = rotate
+    document.getElementById('piranha').onwheel = rotate
+    document.getElementById('shark').onwheel = rotate
+    // document.getElementById(`chimney`).onwheel = rotate
 
 </script>
 </body>
